@@ -10,10 +10,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+@Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private  JwtUtils jwtTokenProvider;
@@ -30,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             //Get JWT From Header
             //Validate Token
             //If Valid Get User Details
-            //--get user name -> load user ->Set the auth context
+            //--get username -> load user ->Set the auth context
             String jwt=jwtTokenProvider.getJwtFromHeader(request);
 
             if (jwt!=null && jwtTokenProvider.validateToken(jwt) ) {
@@ -47,6 +49,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             e.printStackTrace();
 
         }
-
+        filterChain.doFilter(request,response);
     }
 }
