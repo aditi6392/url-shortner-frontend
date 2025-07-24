@@ -12,9 +12,13 @@ public class UrlMapping {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String original_url;
-    private String short_url;
-    private long click_count=0;
+    @Column(name = "original_url")
+    private String originalUrl;
+    @Column(name = "short_url")
+    private String shortUrl;
+    @Column(name = "click_count")
+    private long clickCount=0;
+    @Column(name = "created_date")
     private LocalDateTime createdDate;
 
     @ManyToOne
@@ -24,4 +28,5 @@ public class UrlMapping {
 
     @OneToMany(mappedBy="urlMapping")
     private List<ClickEvent> clickEvents;
+
 }
