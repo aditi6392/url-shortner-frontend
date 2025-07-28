@@ -1,16 +1,30 @@
 import React from 'react';
 import Card from './Card';
 import {motion} from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+
 const LandingPage = () => {
   let desc=  "Generate short, memorable links with ease using Linklytics’s intuitive interface. Share URLs effortlessly across platforms. Optimize your sharing strategy with Linklytics. Track clicks and manage your links seamlessly to enhance your online presence. Generate short, memorable links with ease using Linklytics’s intuitive interface. Share URLs effortlessly across platforms.";
+  
+  const navigate = useNavigate();
+  //const { token } = useStoreContext();
+  //console.log("TOKEN FROM LANDING PAGE: " + token);
 
+  const dashBoardNavigateHandler = () => {
+
+  };
   return(
     <div className="min-h-[calc(100vh-64px)] lg:px-14 sm:px-8 px-4">
       <div className="lg:flex-row flex-col    lg:py-5   pt-16   lg:gap-10 gap-8 flex justify-between items-center">
       <div className="flex-1">
-        <h1 className='font-bold font-roboto text-slate-800 mid:text-5xl text-3xl md:leading-[55px] sm:leading[45px] leading-10 lg:w-full mid:w-[70%] w-full'>
+        <motion.h1 
+        initial={{ opacity: 0, y: -80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className='font-bold font-roboto text-slate-800 mid:text-5xl text-3xl md:leading-[55px] sm:leading[45px] leading-10 lg:w-full mid:w-[70%] w-full'>
           Linklytics Simplifies URL shortening for efficient sharing
-        </h1>
+        </motion.h1>
         <p className='text-slate-700 text-sm my-5'>
           Linklytics streamlines the process of URL shortening, making sharing
             links effortless and efficient. With its user-friendly interface,
@@ -18,15 +32,41 @@ const LandingPage = () => {
             seconds. Simplify your sharing experience with Linklytics today.
         </p>
         <div className='flex items-center gap-3'>
-          <button className='border-btnColor border bg-blue-900 w-40 text-purple-50 rounded-md py-2'>
+          <motion.button 
+           initial={{ opacity: 0, y: 80 }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              onClick={dashBoardNavigateHandler}
+              
+          className='border-btnColor border bg-blue-900 w-40 text-purple-50 rounded-md py-2'>
             Manage Links
-          </button>
-          <button className='border-btnColor border w-40 text-blue-900 text-btncolor rounded-md py-2'>
+          </motion.button>
+          <motion.button
+             initial={{ opacity: 0, y: 80 }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              onClick={dashBoardNavigateHandler}
+          className='border-btnColor border w-40 text-blue-900 text-btncolor rounded-md py-2'>
             Create Short Link
-          </button>
+          </motion.button>
         </div>
       </div>
-      <img className='sm:w-[480px] w-[480px] object-cover rounded-md' src="/images/img2.png" alt="Linklytics" />
+      <motion.img 
+      initial={{ opacity: 0 }}
+            whileInView={{
+              opacity: 1,
+            }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+      className='sm:w-[480px] w-[480px] object-cover rounded-md' src="/images/img2.png" alt="Linklytics" />
 
       </div>
       <div className="sm:pt-12 pt-7">
@@ -58,5 +98,5 @@ const LandingPage = () => {
 
 
   )
-}
+};
 export default LandingPage;

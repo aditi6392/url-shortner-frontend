@@ -1,9 +1,10 @@
 // import { useState } from 'react'
-import { BrowserRouter,Route,Routes } from 'react-router-dom'
+import { BrowserRouter ,Route,Routes } from 'react-router-dom'
 import './App.css'
 
 import AboutPage from './components/AboutPage'
  import LandingPage from './components/LandingPage'
+ import RegisterPage from './components/RegisterPage'
 
 
 
@@ -20,6 +21,7 @@ import Footer from './components/Footer'
        <Routes>
          <Route path="/" element={<LandingPage />} />
          <Route path="/about" element={<AboutPage />} />
+         <Route path="/register" element={<RegisterPage />} />
        </Routes>
        <Footer />
      </BrowserRouter>
