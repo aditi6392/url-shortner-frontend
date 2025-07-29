@@ -12,12 +12,14 @@ import AboutPage from './components/AboutPage'
  import React from 'react'
 import NavBar from './components/navbar'
 import Footer from './components/Footer'
+import { Toaster } from 'react-hot-toast'
  
  const App = () => {
    return (
     <>
      <BrowserRouter>
      <NavBar/>
+     <Toaster position='bottom-center'/>
        <Routes>
          <Route path="/" element={<LandingPage />} />
          <Route path="/about" element={<AboutPage />} />
