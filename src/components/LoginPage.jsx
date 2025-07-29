@@ -2,16 +2,20 @@
 
 import React from 'react'
 import { useState } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import TextField from './TextField'; // ✅ Use correct path based on your folder structure
 import toast from 'react-hot-toast';
+import { useStoreContext } from '../contextApi/ContextApi';
 
-const Login= () => {
+
+const LoginPage= () => {
     const navigate = useNavigate();
     const [loader, setLoader] = useState(false);
+    const {setToken} = useStoreContext(); // Import ContextApi to access setToken
 
     const {
         register,
@@ -34,12 +38,12 @@ const Login= () => {
                 `${import.meta.env.VITE_BACKEND_URL}/api/auth/public/login`,
                 data
             );
-            //store token in local storage
-            console.log(response.token);
+            
+            setToken(response.token); // Update the context with the new token
             localStorage.setItem("JWT_TOKEN", JSON.stringify(response.token));
             toast.success("Login successful! .");
             reset();
-            navigate("/");
+            navigate("/dashboard");
 
         } catch (error) {
             console.error("login failed:", error);
@@ -99,4 +103,4 @@ const Login= () => {
     )
 }
 
-export default Login;
+export default LoginPage;
