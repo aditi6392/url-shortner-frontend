@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import TextField from './TextField'; // ✅ Use correct path based on your folder structure
 import toast from 'react-hot-toast';
 
-const RegisterPage = () => {
+const Login= () => {
     const navigate = useNavigate();
     const [loader, setLoader] = useState(false);
 
@@ -27,20 +27,23 @@ const RegisterPage = () => {
         mode: "onTouched",
     });
 
-    const registerHandler = async (data) => {
+    const loginHandler = async (data) => {
         setLoader(true);
         try {
             const { data: response } = await axios.post(
-                `${import.meta.env.VITE_BACKEND_URL}/api/auth/public/register`,
+                `${import.meta.env.VITE_BACKEND_URL}/api/auth/public/login`,
                 data
             );
-
+            //store token in local storage
+            console.log(response.token);
+            localStorage.setItem("JWT_TOKEN", JSON.stringify(response.token));
+            toast.success("Login successful! .");
             reset();
-            navigate("/login");
-            toast.success("Registration successful! Please login.");
+            navigate("/");
+
         } catch (error) {
-            console.error("Registration failed:", error);
-            toast.error("Registration failed. Please try again.");
+            console.error("login failed:", error);
+            toast.error("Login failed. Please try again.");
         } finally {
             setLoader(false);
         }
@@ -48,11 +51,11 @@ const RegisterPage = () => {
 
     return (
         <div className='min-h-[calc(100vh-64px)] flex justify-center items-center'>
-            <form onSubmit={handleSubmit(registerHandler)}
+            <form onSubmit={handleSubmit(loginHandler)}
                 className='sm:w-[450px] w-[360px] py-8 sm:px-8 px-4 rounded-md-bg-black shadow-md flex flex-col gap-4'
             >
                 <h1 className="text-center text-blue-900 font-semibold text-xl border border-blue-900 rounded-md px-8 py-3 shadow-md w-fit mx-auto">
-                    Register Here
+                    Login Here
                 </h1>
                 <hr className='mt-2 mb-10 text-white' />
                 <div className='flex flex-col gap-3'>
@@ -66,16 +69,7 @@ const RegisterPage = () => {
                         register={register}
                         errors={errors}
                     />
-                    <TextField
-                        label="Email"
-                        required
-                        id="email"
-                        type="email"
-                        message="*Email is required"
-                        placeholder="Type your email"
-                        register={register}
-                        errors={errors}
-                    />
+                    
                     <TextField
                         label="Password"
                         required
@@ -92,12 +86,12 @@ const RegisterPage = () => {
                     type="submit"
                     className='bg-blue-900 text-white font-semibold text-md px-4 py-2 rounded-md hover:bg-blue-800 transition-all duration-300 mt-4'
                 >
-                    {loader ? "Loading..." : "Register"}
+                    {loader ? "Loading..." : "Login"}
                 </button>
                 <p className='text-center text-sm text-slate-700 mt-6'>
-                    Already have an account?
-                    <Link className='text-blue-900 font-semibold hover:underline' to="/login">
-                        <span> Login</span>
+                    Don't have an account?
+                    <Link className='text-blue-900 font-semibold hover:underline' to="/register">
+                        <span> Sign Up</span>
                     </Link>
                 </p>
             </form>
@@ -105,4 +99,4 @@ const RegisterPage = () => {
     )
 }
 
-export default RegisterPage;
+export default Login;
