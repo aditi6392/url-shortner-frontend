@@ -4,8 +4,10 @@ import { BrowserRouter ,Route,Routes } from 'react-router-dom'
 import './App.css'
 import AboutPage from './components/AboutPage'
  import LandingPage from './components/LandingPage'
+ import DashboardLayout from "./components/Dashboard/DashboardLayout";
+
  import RegisterPage from './components/RegisterPage'
-import DashboardLayout from './Dashboard/DashboardLayout' // ✅ Use correct path based on your folder structure
+//import DashboardLayout from '.Dashboard/DashboardLayout' // ✅ Use correct path based on your folder structure
 import NavBar from './components/navbar'
 import Footer from './components/Footer'
 import { Toaster } from 'react-hot-toast'
