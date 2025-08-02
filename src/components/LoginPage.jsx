@@ -1,8 +1,5 @@
-
-
-import React from 'react'
+import React from 'react';
 import { useState } from 'react';
-import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -11,11 +8,10 @@ import TextField from './TextField'; // ✅ Use correct path based on your folde
 import toast from 'react-hot-toast';
 import { useStoreContext } from '../contextApi/ContextApi';
 
-
-const LoginPage= () => {
+const LoginPage = () => {
     const navigate = useNavigate();
     const [loader, setLoader] = useState(false);
-    const {setToken} = useStoreContext(); // Import ContextApi to access setToken
+    const { setToken } = useStoreContext(); // Import ContextApi to access setToken
 
     const {
         register,
@@ -38,10 +34,14 @@ const LoginPage= () => {
                 `${import.meta.env.VITE_BACKEND_URL}/api/auth/public/login`,
                 data
             );
-            
+
             setToken(response.token); // Update the context with the new token
             localStorage.setItem("JWT_TOKEN", JSON.stringify(response.token));
-            toast.success("Login successful! .");
+
+            // ✅ Set Authorization header globally for future requests
+            axios.defaults.headers.common['Authorization'] = `Bearer ${response.token}`;
+
+            toast.success("Login successful!");
             reset();
             navigate("/dashboard");
 
@@ -55,7 +55,8 @@ const LoginPage= () => {
 
     return (
         <div className='min-h-[calc(100vh-64px)] flex justify-center items-center'>
-            <form onSubmit={handleSubmit(loginHandler)}
+            <form
+                onSubmit={handleSubmit(loginHandler)}
                 className='sm:w-[450px] w-[360px] py-8 sm:px-8 px-4 rounded-md-bg-black shadow-md flex flex-col gap-4'
             >
                 <h1 className="text-center text-blue-900 font-semibold text-xl border border-blue-900 rounded-md px-8 py-3 shadow-md w-fit mx-auto">
@@ -73,7 +74,6 @@ const LoginPage= () => {
                         register={register}
                         errors={errors}
                     />
-                    
                     <TextField
                         label="Password"
                         required
@@ -100,7 +100,7 @@ const LoginPage= () => {
                 </p>
             </form>
         </div>
-    )
-}
+    );
+};
 
 export default LoginPage;
